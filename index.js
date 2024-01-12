@@ -17,11 +17,6 @@ const questions = [
       },
       {
         type: 'input',
-        name: 'contentsTable',
-        message: 'Provide the table of contents:',
-      },
-      {
-        type: 'input',
         name: 'installation',
         message: 'Provide a description the installation guidelines:',
       },  
@@ -37,7 +32,7 @@ const questions = [
       },
       {
         type: 'input',
-        name: 'licence',
+        name: 'license',
         message: 'Choose a licence:',
       },
       {
@@ -47,7 +42,12 @@ const questions = [
       },
       {
         type: 'input',
-        name: 'githubprofile',
+        name: 'tests',
+        message: 'Include a description of the tests that can be done on your project:',
+      },
+      {
+        type: 'input',
+        name: 'username',
         message: 'Include your git hub profile link:',
       },
       {
@@ -57,7 +57,7 @@ const questions = [
       },
       {
         type: 'input',
-        name: 'email address',
+        name: 'email',
         message: 'Include your email address:',
       },
 
@@ -72,7 +72,19 @@ function writeToFile(fileName, data) {
 
 // function to initialize program
 function init() {
-
+  inquirer.prompt(questions)
+    .then((answers) => {
+      // Generate markdown content using user input
+      const markdownContent = generateMarkdown(answers);
+      
+      // Write the markdown content to README.md
+      writeToFile('READMEtest.md', markdownContent);
+      
+      console.log('READMEtest.md successfully generated!');
+    })
+    .catch((error) => {
+      console.error('Error:', error.message);
+    });
 }
 
 // function call to initialize program
