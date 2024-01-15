@@ -65,7 +65,7 @@ const questions = [
 
 ];
 
-// function to write README file
+// This function simply writes the input data from the user into the README file
 function writeToFile(fileName, data) {
     fs.writeFileSync(fileName, data);
 }
@@ -87,5 +87,5 @@ function init() {
     });
 }
 
-// function call to initialize program
+// function call to initialize my program
 init();
