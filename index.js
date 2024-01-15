@@ -33,7 +33,15 @@ const questions = [
       {
         type: 'input',
         name: 'license',
-        message: 'Choose a licence:',
+        message: 'Choose a licence among the following:',
+        choices: [
+          'Apache 2.0',
+          'CC0 1.0',
+          'Eclipse Public License 1.0',
+          'IBM Public License Version 1.0',
+          'MIT',
+          'Unlicense',
+        ],
       },
       {
         type: 'input',
