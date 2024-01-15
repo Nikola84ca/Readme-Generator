@@ -31,7 +31,7 @@ const questions = [
         message: 'Provide a short description of your project:',
       },
       {
-        type: 'input',
+        type: 'checkbox',
         name: 'license',
         message: 'Choose a licence among the following:',
         choices: [
