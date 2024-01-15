@@ -3,7 +3,7 @@ function generateMarkdown(data) {
   // First we declase the licenseBadge variable that will contain the selected license's badge url
   let licenseBadge;
 
-  // Check the selected license and set the badge depending on the following links
+  // Check the selected license and set the badge depending on the following links, I could have also used the map function but since I have a limited list of option I opted for a simple if/else
   if (data.license.includes('Apache 2.0')) {
     licenseBadge = '[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)';
   } else if (data.license.includes('CC0 1.0')) {
@@ -22,6 +22,7 @@ function generateMarkdown(data) {
   }
   
   return `
+  
 # ${data.title}
 
 ## Description
