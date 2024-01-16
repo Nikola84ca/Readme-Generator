@@ -13,9 +13,9 @@ To use this app, simply follow the instructions in the Installation paragraph be
 ```bash
 node index.js
 ```
-Once the program has been lounched just follow the instructions and input the data you want to include in your README file. Here is a gif animation of the step-by-step procedure to generate your README file:
+Once the program has been lounched just follow the instructions and input the data you want to include in your README file. Here is a video of the step-by-step procedure to generate your README file:
 
-![Gif animation of how to use the Password Generator website](/assets/Images/Work-Day-Scheduler.gif)
+![Gif animation of how to use the ReadMe File Generator app](/Images/ReadMe-Generator.gif)
 
 ## Installation
 First, make sure that Git and Git Bash are installed on your system. To download this project on your machine click [HERE](https://github.com/Nikola84ca/Readme-Generator) to go to the repository on GitHub. Click on the green CODE button, and copy the link of the repository. In your machine, open gitBash and create a new folder where you will clone the project using the command below:
@@ -178,7 +178,7 @@ function init() {
       const markdownContent = generateMarkdown(answers);
       
       // Write the markdown content to READMEtest file. In this project I call it READMEtest since I don't want to override the README file of the actual project.
-      
+
       writeToFile('READMEtest.md', markdownContent);
       
       console.log('READMEtest.md successfully generated!');
