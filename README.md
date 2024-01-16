@@ -1,6 +1,6 @@
 # Readme File Generator
 
-Project and development of a Js application that will allow users to quickly create a README file through the prompt.
+Project and development of a node.js application that will allow users to quickly create a README file through the prompt.
 
 
 ## About Me 
@@ -45,25 +45,151 @@ The README file generator app will run in the prompt of commands allowing users 
 
 ## My Process
 
-* The first thing that was required was to 
+* The first thing that was required was to create an array of questions for the user. These questions, that will start once the user launches the index.js file in the prompt using node, will collect all the data necessary to create and write the generated README file. All the input in the array are type input apart from the license that required a checkbox so that the user can choose among a set list of options.
+
+```JavaScript
+const questions = [
+    {
+        type: 'input',
+        name: 'title',
+        message: 'Enter the title of your project:',
+      },
+      {
+        type: 'input',
+        name: 'description',
+        message: 'Provide a short description of your project:',
+      },
+      {
+        type: 'input',
+        name: 'installation',
+        message: 'Provide a description the installation guidelines:',
+      },  
+      {
+        type: 'input',
+        name: 'usage',
+        message: 'Provide a description of your project usage:',
+      },
+      {
+        type: 'input',
+        name: 'description',
+        message: 'Provide a short description of your project:',
+      },
+      {
+        type: 'checkbox',
+        name: 'license',
+        message: 'Choose a licence among the following:',
+        choices: [
+          'Apache 2.0',
+          'CC0 1.0',
+          'Eclipse Public License 1.0',
+          'IBM Public License Version 1.0',
+          'MIT',
+          'Unlicense',
+        ],
+      },
+      {
+        type: 'input',
+        name: 'credits',
+        message: 'Provide a list of contributors if you have any:',
+      },
+
+//...other questions
+];
+```
+
+* Then I created a function to writes the input data from the user into the README file
 
 ```JavaScript
 
+function writeToFile(fileName, data) {
+    fs.writeFileSync(fileName, data);
+}
+
 ```
 
-* Then I 
+* At this point I implemented the function generateMarkdown.js to generate the markdown for the README file. In the first part of the function I declared the variable licenseBadge that will contain the selected license's badge url. This first part of the function will then check the license selected by the user in the checklist in the prompt and set the badge depending on the relative link, I could have also used the map function but since I have a limited list of option I opted for a simple if/else.
+
+```JavaScript
+if (data.license.includes('Apache 2.0')) {
+    licenseBadge = '[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)';
+  } else if (data.license.includes('CC0 1.0')) {
+    licenseBadge = '[![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)';
+  } else if (data.license.includes('Eclipse Public License 1.0')) {
+    licenseBadge = '[![License](https://img.shields.io/badge/License-EPL_1.0-red.svg)](https://opensource.org/licenses/EPL-1.0)';
+  } else if (data.license.includes('IBM Public License Version 1.0')) {
+    licenseBadge = '[![License: IPL 1.0](https://img.shields.io/badge/License-IPL_1.0-blue.svg)](https://opensource.org/licenses/IPL-1.0)';
+  } else if (data.license.includes('MIT')) {
+    licenseBadge = '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)';
+  } else if (data.license.includes('Unlicense')) {
+    licenseBadge = '[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)';
+  } else {
+    // Default to an empty string if the user doen't select any license
+    licenseBadge = '';
+  }
+```
+
+* Now that I have the correct link to the badge of the licence selected I have all the data necessary to complete the markdown. So I simply implemented each section of the README file with it's relative data from the prompt. Here is the code:
 
 ```JavaScript
 
+# ${data.title}
+
+## Description
+${data.description}
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+- [Contributing](#contributing)
+- [Tests](#tests)
+- [Questions](#questions)
+
+## Installation
+${data.installation}
+
+## Usage
+${data.usage}
+
+## License
+${licenseBadge}
+
+## Contributing
+${data.credits}
+
+## Tests
+${data.tests}
+
+## Questions
+If you have any questions, feel free to reach out to me at [${data.email}](mailto:${data.email}) or visit my GitHub profile at [${data.username}](https://github.com/${data.username}).
+`;
+}
+
+module.exports = generateMarkdown;
 ```
 
-* Now that all 
+* The last thing I did was actually the most important, I created the function init in the index.js file, this function is fundamental to initialize my program, first it shows the questions in the prompt and collects the answers, then passes the data to the generateMarkdown function. Then the writeToFile function will write the markdown and will show the success message if the file has been generate and correctly written.
 
 ```JavaScript
+function init() {
+  inquirer.prompt(questions)
+    .then((answers) => {
+      // Generate markdown content using user input
+      const markdownContent = generateMarkdown(answers);
+      
+      // Write the markdown content to README file
+      writeToFile('READMEtest.md', markdownContent);
+      
+      console.log('READMEtest.md successfully generated!');
+    })
+    .catch((error) => {
+      console.error('Error:', error.message);
+    });
+}
 
+
+init();
 ```
-
-
 
 ## Credits
 
@@ -81,4 +207,4 @@ I welcome all the brilliant coders out there to join me in this project. Join ef
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
