@@ -86,7 +86,7 @@ function init() {
       // Generate markdown content using user input
       const markdownContent = generateMarkdown(answers);
       
-      // Write the markdown content to README file
+      // Write the markdown content to README file. In this project I call it READMEtest since I don't want to override the README file of the actual project.
       writeToFile('READMEtest.md', markdownContent);
       
       console.log('READMEtest.md successfully generated!');
