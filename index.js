@@ -3,7 +3,7 @@ const path = require('path');
 const inquirer = require("inquirer");
 const generateMarkdown = require("./utils/generateMarkdown");
 
-// array of questions for user
+// array of questions for user, they all are type input apart from the license that required a checkbox so that the user can choose among a set list of options
 const questions = [
     {
         type: 'input',
@@ -78,14 +78,15 @@ function writeToFile(fileName, data) {
     fs.writeFileSync(fileName, data);
 }
 
-// function to initialize program
+// function to initialize my program, first it shows the questions in the prompt and collects the answers, then passes the data to the generateMarkdown function. then the writeToFile function will  write the markdown and will show the success message if the file has been generate and correctly written.
+
 function init() {
   inquirer.prompt(questions)
     .then((answers) => {
       // Generate markdown content using user input
       const markdownContent = generateMarkdown(answers);
       
-      // Write the markdown content to README.md
+      // Write the markdown content to README file
       writeToFile('READMEtest.md', markdownContent);
       
       console.log('READMEtest.md successfully generated!');
